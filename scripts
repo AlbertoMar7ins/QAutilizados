@@ -1,2 +1,5 @@
 #subir bases de forma automática QAsetup e nome do banco
-QAsetup gv_09
+qasetup am_mdc_2506
+
+#após buildar, abrir pasta server e executar idempiere-server
+./idempiere-server.sh
