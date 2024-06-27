@@ -1,0 +1,47 @@
+#Classe criada para execução de processo
+package org.mundodocafe.process;
+import java.util.List;
+import org.adempiere.base.annotation.Parameter;
+import org.adempiere.base.annotation.Process;
+import org.compiere.model.Query;
+import org.compiere.process.SvrProcess;
+import org.mundodocafe.model.MZEquipe;
+
+@Process
+public class ProcZAlterarTrabalho extends SvrProcess {
+
+	@Parameter
+	private int p_Z_Equipe_ID = 0;
+
+	@Override
+	protected void prepare() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected String doIt() throws Exception {
+		
+		if (getRecord_ID() > 0) {
+			p_Z_Equipe_ID = getRecord_ID();
+		}
+		MZEquipe e = new MZEquipe(getCtx(), p_Z_Equipe_ID, get_TrxName());
+		
+		if (p_Z_Equipe_ID == 0 && getRecord_ID() > 0) {
+			e.setZ_isEmTrabalho(!e.isZ_isEmTrabalho());
+			e.saveEx();
+		}else
+		if (p_Z_Equipe_ID == 0) {
+			Query q = new Query(getCtx(), MZEquipe.Table_Name, null, get_TrxName());
+			List<MZEquipe> equipes = q.list();
+			
+			for (MZEquipe equipe : equipes) {
+				equipe.setZ_isEmTrabalho(!equipe.isZ_isEmTrabalho());
+				equipe.saveEx();
+			}
+		}
+		// TODO Auto-generated method stub
+		return "Completo.";
+	}
+
+}

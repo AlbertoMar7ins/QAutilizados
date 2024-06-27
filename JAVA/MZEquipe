@@ -1,0 +1,35 @@
+package org.mundodocafe.model;
+
+import java.sql.ResultSet;
+import java.util.Properties;
+
+public class MZEquipe extends X_Z_Equipe {
+	
+	private static final long serialVersionUID = 6952322958287057731L;
+
+	public MZEquipe(Properties ctx, int Z_Equipe_ID, String trxName) {
+		super(ctx, Z_Equipe_ID, trxName);
+		// TODO Auto-generated constructor stub
+	}
+
+	public MZEquipe(Properties ctx, int Z_Equipe_ID, String trxName, String... virtualColumns) {
+		super(ctx, Z_Equipe_ID, trxName, virtualColumns);
+		// TODO Auto-generated constructor stub
+	}
+
+	public MZEquipe(Properties ctx, String Z_Equipe_UU, String trxName) {
+		super(ctx, Z_Equipe_UU, trxName);
+		// TODO Auto-generated constructor stub
+	}
+
+	public MZEquipe(Properties ctx, String Z_Equipe_UU, String trxName, String... virtualColumns) {
+		super(ctx, Z_Equipe_UU, trxName, virtualColumns);
+		// TODO Auto-generated constructor stub
+	}
+
+	public MZEquipe(Properties ctx, ResultSet rs, String trxName) {
+		super(ctx, rs, trxName);
+		// TODO Auto-generated constructor stub
+	}
+
+}
