@@ -1,0 +1,27 @@
+package org.mundodocafe.callout;
+
+import java.util.Properties;
+
+import org.adempiere.base.IColumnCallout;
+import org.adempiere.base.annotation.Callout;
+import org.compiere.model.GridField;
+import org.compiere.model.GridTab;
+import org.compiere.model.MBPartner;
+import org.mundodocafe.model.MZEquipe;
+
+@Callout(tableName = "Z_Equipe", columnName = "Z_Contratante_ID")
+public class CalloutZEquipe implements IColumnCallout {
+
+	
+	@Override
+	public String start(Properties ctx, int WindowNo, GridTab mTab, GridField mField, Object value, Object oldValue) {
+		
+		Integer Z_Contratante_ID = (Integer) value;
+		MBPartner mb = new MBPartner(ctx, Z_Contratante_ID, null);
+		mTab.setValue(MZEquipe.COLUMNNAME_Name, mb.getName());
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
