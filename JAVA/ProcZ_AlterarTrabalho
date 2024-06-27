@@ -1,6 +1,6 @@
-#Classe criada para execução de processo
 package org.mundodocafe.process;
 import java.util.List;
+
 import org.adempiere.base.annotation.Parameter;
 import org.adempiere.base.annotation.Process;
 import org.compiere.model.Query;
@@ -40,7 +40,17 @@ public class ProcZAlterarTrabalho extends SvrProcess {
 				equipe.saveEx();
 			}
 		}
-		// TODO Auto-generated method stub
+			else
+				if(p_Z_Equipe_ID == 0 && getAD_PInstance_ID() > 0) {
+					List<MZEquipe> equipes = new Query(getCtx(), MZEquipe.Table_Name, null, get_TrxName())
+										.setOnlySelection(getAD_PInstance_ID()).list();
+					for (MZEquipe equipe : equipes) {
+						equipe.setZ_isEmTrabalho(!equipe.isZ_isEmTrabalho());
+						equipe.saveEx();
+					}
+				}
+		
+		
 		return "Completo.";
 	}
 

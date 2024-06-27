@@ -1,0 +1,36 @@
+package org.mundodocafe.model;
+
+import java.sql.ResultSet;
+import java.util.Properties;
+
+import org.compiere.util.DB;
+
+public class MZIntegrantes extends X_Z_Integrantes {
+	
+	private static final long serialVersionUID = -162625947003966966L;
+
+	public MZIntegrantes(Properties ctx, int Z_Integrantes_ID, String trxName) {
+		super(ctx, Z_Integrantes_ID, trxName);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public MZIntegrantes(Properties ctx, ResultSet rs, String trxName) {
+		super(ctx, rs, trxName);
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	protected boolean afterSave(boolean newRecord, boolean success) {
+		
+		if (success) {
+			int sql = DB.getSQLValueEx(get_TrxName(), "select count(*) from Z_Integrantes "
+													+ "where Z_Equipe_ID = ?", getZ_Equipe_ID());
+			MZEquipe e = new MZEquipe(getCtx(),getZ_Equipe_ID(), get_TrxName());
+			e.setZ_NumIntegrantes(sql);
+			e.saveEx();
+		}
+		return super.afterSave(newRecord, success);
+	}
+
+}
