@@ -1,0 +1,19 @@
+#SQL Criado para execução de relatório JASPER
+
+SELECT
+zi.Name AS nome_integrante,
+ze.Name AS nome_equipe,
+au.Name AS lider_equipe,
+ao.Name AS org,
+CASE
+WHEN zi.z_funcao = 'LD' THEN 'LIDER'
+WHEN zi.z_funcao = 'DE' THEN 'DESENVOLVEDOR'
+WHEN zi.z_funcao = 'AN' THEN 'ANALISTA'
+WHEN zi.z_funcao = 'SU' THEN 'SUPORTE'
+END AS funcao
+
+FROM Z_Integrantes zi
+LEFT JOIN Z_Equipe ze ON ze.Z_Equipe_ID = zi.Z_Equipe_ID
+LEFT JOIN AD_User au ON ze.Z_Liderequipe_ID = au.AD_User_ID
+LEFT JOIN AD_Org ao ON ao.AD_Org_ID = ze.AD_Org_ID
+WHERE Z_Integrantes_ID = $P{RECORD_ID}

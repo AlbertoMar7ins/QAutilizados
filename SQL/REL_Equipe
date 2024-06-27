@@ -1,0 +1,16 @@
+CREATE OR REPLACE VIEW Z_RV_RelEquipe AS
+SELECT 
+ze.ad_client_id,
+ze.ad_org_id,
+ze.name,
+cb.name AS contratante,
+ze.z_isemtrabalho AS emtrabalho,
+zi.z_funcao AS funcao,
+adu.name AS liderequipe,
+ze.z_numintegrantes AS numerointegrantes,
+ad.name AS usuario
+FROM z_equipe ze
+LEFT JOIN z_integrantes zi ON ze.z_equipe_id = zi.z_equipe_id 
+LEFT JOIN c_bpartner cb ON cb.c_bpartner_id = z_contratante_id
+LEFT JOIN ad_user adu ON ze.z_liderequipe_id = adu.ad_user_id 
+LEFT JOIN ad_user ad ON zi.z_usuario_id = ad.ad_user_id 
