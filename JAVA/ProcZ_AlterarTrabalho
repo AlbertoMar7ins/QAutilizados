@@ -3,6 +3,7 @@ import java.util.List;
 
 import org.adempiere.base.annotation.Parameter;
 import org.adempiere.base.annotation.Process;
+import org.compiere.model.MSysConfig;
 import org.compiere.model.Query;
 import org.compiere.process.SvrProcess;
 import org.mundodocafe.model.MZEquipe;
@@ -21,26 +22,34 @@ public class ProcZAlterarTrabalho extends SvrProcess {
 
 	@Override
 	protected String doIt() throws Exception {
-		
 		if (getRecord_ID() > 0) {
 			p_Z_Equipe_ID = getRecord_ID();
 		}
 		MZEquipe e = new MZEquipe(getCtx(), p_Z_Equipe_ID, get_TrxName());
+		boolean config = MSysConfig.getBooleanValue("Z_PERMITIR_EM_TRABALHO_SEM_INTEGRANTES", false, getAD_Client_ID(), e.getAD_Org_ID());
+
+        if (config)
+		{
+			if (e.getZ_NumIntegrantes() == 0) {
+				return "Impossível alterar estado de trabalho de equipe sem integrantes.";
+			}
+		}
 		
-		if (p_Z_Equipe_ID == 0 && getRecord_ID() > 0) {
+		if (p_Z_Equipe_ID > 0 && getRecord_ID() > 0) { //executar da janela
 			e.setZ_isEmTrabalho(!e.isZ_isEmTrabalho());
 			e.saveEx();
 		}else
-		if (p_Z_Equipe_ID == 0) {
-			Query q = new Query(getCtx(), MZEquipe.Table_Name, null, get_TrxName());
-			List<MZEquipe> equipes = q.list();
-			
-			for (MZEquipe equipe : equipes) {
-				equipe.setZ_isEmTrabalho(!equipe.isZ_isEmTrabalho());
-				equipe.saveEx();
+			if (p_Z_Equipe_ID == 0) { //executar do processo
+				Query q = new Query(getCtx(), MZEquipe.Table_Name, null, get_TrxName());
+				List<MZEquipe> equipes = q.list();
+				
+				for (MZEquipe equipe : equipes) {
+					equipe.setZ_isEmTrabalho(!equipe.isZ_isEmTrabalho());
+					equipe.saveEx();
+				}
 			}
-		}
 			else
+				//executar de uma info view
 				if(p_Z_Equipe_ID == 0 && getAD_PInstance_ID() > 0) {
 					List<MZEquipe> equipes = new Query(getCtx(), MZEquipe.Table_Name, null, get_TrxName())
 										.setOnlySelection(getAD_PInstance_ID()).list();
@@ -49,8 +58,6 @@ public class ProcZAlterarTrabalho extends SvrProcess {
 						equipe.saveEx();
 					}
 				}
-		
-		
 		return "Completo.";
 	}
 
