@@ -1,0 +1,78 @@
+package org.mundodocafe.process;
+
+import org.adempiere.base.annotation.Parameter;
+import org.compiere.process.SvrProcess;
+import org.compiere.util.DB;
+import org.compiere.util.Env;
+
+public class ProcZRelatorioEquipe extends SvrProcess {
+
+	public ProcZRelatorioEquipe() {
+		
+	}
+	
+	@Parameter
+	private Integer Z_Contratante_ID = 0;
+
+	@Override
+	protected void prepare() {
+
+
+	}
+
+	@Override
+	protected String doIt() throws Exception {
+		
+			//deleta todos os dados da tabela temporaria
+			StringBuilder delete = new StringBuilder("delete from T_Z_RelatorioEquipe");
+			DB.executeUpdateEx(delete.toString(), get_TrxName());
+			
+			StringBuilder select = new StringBuilder("SELECT ");
+			
+				select
+					.append("ze.ad_org_id")
+					.append(", ze.ad_client_id")
+					.append(", ze.name")
+					.append(", ze.z_contratante_id")
+					.append(", ze.z_liderequipe_id")
+					.append(", ze.z_isemtrabalho")
+					.append(", ze.z_numintegrantes")
+					.append(", zi.z_usuario_id")
+					.append(", zi.z_funcao")
+					.append(",").append(getAD_PInstance_ID())
+					.append(", ze.Z_Equipe_ID ");
+				
+			StringBuilder from = new StringBuilder("FROM Z_EQUIPE ze" +
+					" LEFT JOIN c_bpartner cb ON cb.c_bpartner_id = ze.z_contratante_id " +
+					" LEFT JOIN ad_user ad ON ad.ad_user_id = ze.z_liderequipe_id " +
+					" LEFT JOIN z_integrantes zi ON zi.z_equipe_id = ze.z_equipe_id ");
+			
+			StringBuilder where = new StringBuilder("Where " +
+					"ze.ad_client_id			= '" + getAD_Client_ID() + "'" +
+					" and ze.ad_org_id			= '" + Env.getAD_Org_ID(getCtx()) + "'" +
+					" and ze.z_contratante_id   = '" + Z_Contratante_ID + "'");
+			
+			select.append(from.toString()).append(where.toString());
+			
+			StringBuilder insert = new StringBuilder("Insert into T_Z_RelatorioEquipe (");
+				insert 
+					.append("ad_org_id, ")
+					.append("ad_client_id, ")
+					.append("name, ")
+					.append("z_contratante_id, ")
+					.append("z_liderequipe_id, ")
+					.append("z_numintegrante, ")
+					.append("z_usuario_id, ")
+					.append("z_funcao, ")
+					.append("AD_PInstance_ID, ")
+					.append("Z_Equipe_ID, ")
+					.append(", ")
+					.append(" ) ")
+					.append(select.toString());
+			
+				DB.executeUpdateEx(insert.toString(), get_TrxName());
+				
+				return null;
+	}
+
+}
