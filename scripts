@@ -9,3 +9,5 @@ dbrestore -n quicklog-api -d NomeBanco --drop --update
 
 #Excluir m2
 rm -rf ~/m2
+
+#QUICKLOG - quando for subir base subir com bancos separados para a API e para a base, se subir a base com o banco da API vai trazer o tema idempiere
