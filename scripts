@@ -3,3 +3,9 @@ qasetup am_mdc_2506
 
 #após buildar, abrir pasta server e executar idempiere-server
 ./idempiere-server.sh
+
+#Copiar banco quicklog-api portal
+dbrestore -n quicklog-api -d NomeBanco --drop --update
+
+#Excluir m2
+rm -rf ~/m2
