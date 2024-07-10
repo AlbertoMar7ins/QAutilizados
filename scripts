@@ -11,3 +11,6 @@ dbrestore -n quicklog-api -d NomeBanco --drop --update
 rm -rf ~/m2
 
 #QUICKLOG - quando for subir base subir com bancos separados para a API e para a base, se subir a base com o banco da API vai trazer o tema idempiere
+#CONECTOR - Sempre que obter o banco atualizar com o dbrestore após executar o qasetup
+
+#QASETUP - Verificar branch repos.list antes de executar
