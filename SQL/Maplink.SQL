@@ -35,7 +35,6 @@ WHERE COF_PackingList_ID = $P{IdLista};
 
 -- Por Expedição
 UPDATE M_InOut SET COF_IsRoteirizado = 'N' WHERE documentNo IN (
-
 '1226503',
 '1226509',
 '1226554',

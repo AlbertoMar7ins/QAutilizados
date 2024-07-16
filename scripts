@@ -14,3 +14,6 @@ rm -rf ~/m2
 #CONECTOR - Sempre que obter o banco atualizar com o dbrestore após executar o qasetup
 
 #QASETUP - Verificar branch repos.list antes de executar
+
+#Comando selecionar arquivos
+find -iname *server.*launch
