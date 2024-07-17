@@ -17,3 +17,7 @@ rm -rf ~/m2
 
 #Comando selecionar arquivos
 find -iname *server.*launch
+
+#Excluir banco de dados
+dbrestore --drop-only
+#Irá aparecer quais você deseja excluir
