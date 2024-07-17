@@ -32,6 +32,8 @@ UPDATE COF_PackingList_Line SET M_InOut_ID = null
 WHERE COF_PackingList_ID = $P{IdLista};
 --
 
+-- Deletar coordenadas por ID da lista
+DELETE FROM cof_coordenada WHERE COF_PackingList_ID=5059073
 
 -- Por Expedição
 UPDATE M_InOut SET COF_IsRoteirizado = 'N' WHERE documentNo IN (
