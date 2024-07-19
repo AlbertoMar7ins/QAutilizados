@@ -1,0 +1,4 @@
+-- Para atualizar a senha de um banco, útil em casos onde o banco foi copiado
+SELECT "password",* FROM ad_user WHERE "password" IS NOT NULL
+
+UPDATE ad_user SET "password" = 'am_udiaco1907' WHERE "password" IS NOT NULL
