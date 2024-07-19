@@ -1,0 +1,11 @@
+-- Marcar Script como aplicado
+SELECT register_migration_script('202406101640_BRERP-11-17946.sql') FROM dual;
+
+-- Buscar script por numero do ticket ou um pedaço do nome
+SELECT * FROM ad_migrationscript am WHERE "name" ILIKE '%17946%'
+
+-- Procurar se tem algum processo com ad_process_id e seqno
+SELECT * FROM  ad_process_para app WHERE ad_process_id = 320 AND seqno = 70
+
+-- Atualizar seqno e ad_process_id para outra numeração
+UPDATE ad_process_para SET seqno = 65 WHERE ad_process_para_id=1501111 AND ad_process_id = 320
