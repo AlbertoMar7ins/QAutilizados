@@ -21,3 +21,8 @@ find -iname *server.*launch
 #Excluir banco de dados
 dbrestore --drop-only
 #Irá aparecer quais você deseja excluir
+
+#Quando subir base de cliente pelo Eclipse copiar os arquivos da pasta Reports do cliente para a pasta Reports do Core
+#Para poder abrir os relatórios personalizados
+
+#Quando for subir Maplink importar rest no eclipse
