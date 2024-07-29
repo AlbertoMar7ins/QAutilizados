@@ -4,6 +4,9 @@ SELECT register_migration_script('202406101640_BRERP-11-17946.sql') FROM dual;
 -- Buscar script por numero do ticket ou um pedaço do nome
 SELECT * FROM ad_migrationscript am WHERE "name" ILIKE '%17946%'
 
+-- Deletar script por id
+DELETE FROM ad_migrationscript WHERE ad_migrationscript_id = '5003462'
+
 -- Procurar se tem algum processo com ad_process_id e seqno
 SELECT * FROM  ad_process_para app WHERE ad_process_id = 320 AND seqno = 70
 
