@@ -29,3 +29,6 @@ dbrestore --drop-only
 #Para poder abrir os relatórios personalizados
 
 #Quando for subir Maplink importar rest no eclipse
+
+#Migrar apenas um commit específico para outra branch
+git cherry-pick f13bd3c
